@@ -1,11 +1,9 @@
-import React from 'react'
+import DetailPageLayout from "@/components/DetailPageLayout"
 
-function page() {
+export default function Home() {
   return (
-    <div className='bg-red-900'>
-      sdsd
-    </div>
+    <>
+      <DetailPageLayout />
+    </>
   )
 }
-
-export default page
