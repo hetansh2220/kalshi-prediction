@@ -1,32 +1,40 @@
 "use client";
 
-import { Link2, Bookmark, Info, ChevronDown, FileText, Code, Settings } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Navbar } from "@/components/navbar";
 import { TradePanel } from "@/components/trade-panel";
 import { Button } from "@/components/ui/button";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
+  ChartConfig,
 } from "@/components/ui/chart";
+import {
+  Link2,
+  Bookmark,
+  Info,
+  ChevronDown,
+  FileText,
+  Code,
+  Settings,
+} from "lucide-react";
 
-const chartData = [
-  { time: "8:00am", probability: 85 },
-  { time: "9:00am", probability: 85 },
-  { time: "10:00am", probability: 45 },
-  { time: "11:00am", probability: 45 },
-  { time: "12:00pm", probability: 60 },
-  { time: "1:00pm", probability: 68 },
-  { time: "2:00pm", probability: 68 },
-  { time: "3:00pm", probability: 65 },
-  { time: "4:00pm", probability: 65 },
-  { time: "5:00pm", probability: 63 },
-  { time: "6:00pm", probability: 63 },
-  { time: "7:00pm", probability: 63 },
-  { time: "8:00pm", probability: 63 },
+const rawChartData = [
+  { time: new Date("2024-12-29T08:00:00").getTime(), probability: 85 },
+  { time: new Date("2024-12-29T09:00:00").getTime(), probability: 85 },
+  { time: new Date("2024-12-29T10:00:00").getTime(), probability: 45 },
+  { time: new Date("2024-12-29T11:00:00").getTime(), probability: 45 },
+  { time: new Date("2024-12-29T12:00:00").getTime(), probability: 60 },
+  { time: new Date("2024-12-29T13:00:00").getTime(), probability: 68 },
+  { time: new Date("2024-12-29T14:00:00").getTime(), probability: 68 },
+  { time: new Date("2024-12-29T15:00:00").getTime(), probability: 65 },
+  { time: new Date("2024-12-29T16:00:00").getTime(), probability: 75 },
+  { time: new Date("2024-12-29T17:00:00").getTime(), probability: 63 },
+  { time: new Date("2024-12-29T18:00:00").getTime(), probability: 63 },
+  { time: new Date("2024-12-29T19:00:00").getTime(), probability: 63 },
+  { time: new Date("2024-12-29T20:00:00").getTime(), probability: 63 },
 ];
 
 const chartConfig = {
@@ -36,8 +44,31 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function DetailPage() {
+function filterByRange(data: typeof rawChartData, range: string) {
+  if (range === "ALL") return data;
+
+  const now = Math.max(...data.map((d) => d.time));
+
+  const ranges: Record<string, number> = {
+    "1H": 60 * 60 * 1000,
+    "6H": 6 * 60 * 60 * 1000,
+    "1D": 24 * 60 * 60 * 1000,
+    "1W": 7 * 24 * 60 * 60 * 1000,
+    "1M": 30 * 24 * 60 * 60 * 1000,
+  };
+
+  const cutoff = now - ranges[range];
+  return data.filter((d) => d.time >= cutoff);
+}
+
+//page
+export default function MarketDetailPage() {
   const [timeRange, setTimeRange] = useState("ALL");
+
+  const chartData = useMemo(
+    () => filterByRange(rawChartData, timeRange),
+    [timeRange]
+  );
 
   return (
     <div className="min-h-screen bg-[#0B1217] text-white">
@@ -45,82 +76,148 @@ export default function DetailPage() {
 
       <main className="container mx-auto px-4 lg:px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 max-w-[1320px] mx-auto">
-
-          {/* Left Column */}
+          {/* LEFT COLUMN */}
           <div className="space-y-4">
-
-            {/* Header */}
+            {/* HEADER */}
             <div className="flex items-start gap-4">
-              <div className="w-14 h-14 bg-[#1E2731] rounded-xl flex items-center justify-center text-xl shrink-0">
-                👨‍💼
-              </div>
+              {/* IMAGE */}
+              <img
+                src="/poly.webp"
+                alt="Market"
+                className="w-16 h-16 rounded-lg object-cover bg-[#1E2731]"
+              />
 
+              {/* TEXT BLOCK */}
               <div className="flex-1 min-w-0">
-                <h1 className="text-xl lg:text-2xl font-medium leading-tight mb-2">
+                {/* TITLE */}
+                <h1 className="text-[26px] leading-snug font-semibold text-white mb-1">
                   Will anyone be charged over Daycare fraud in Minnesota?
                 </h1>
 
-                <div className="flex items-center gap-3 text-sm text-gray-400">
-                  <span>
-                    <span className="text-gray-500">$91,345</span> Vol.
-                  </span>
+                {/* META */}
+                <div className="flex items-center gap-3 text-[18px] text-[#9AA4AF]">
+                  <span>$205,005 Vol.</span>
                   <span className="flex items-center gap-1">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                      <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.2"/>
-                      <path d="M7 3.5V7L9.5 9.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      className="opacity-70"
+                    >
+                      <circle
+                        cx="7"
+                        cy="7"
+                        r="6"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                      />
+                      <path
+                        d="M7 3.5V7L9.5 9.5"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                        strokeLinecap="round"
+                      />
                     </svg>
                     Jan 31, 2026
                   </span>
                 </div>
-              </div>
 
-              <div className="flex gap-2">
-                <Button variant="ghost" size="icon" className="hover:bg-[#1A2128] text-gray-400">
-                  <Link2 className="w-5 h-5" />
-                </Button>
-                <Button variant="ghost" size="icon" className="hover:bg-[#1A2128] text-gray-400">
-                  <Bookmark className="w-5 h-5" />
-                </Button>
+                {/* PROBABILITY */}
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="text-[22px] font-semibold text-[#3BA9FF]">
+                    44%
+                  </span>
+                  <span className="text-[14px] text-[#3BA9FF]/80">chance</span>
+                  <span className="flex items-center gap-1 text-[13px] text-red-400">
+                    ▼ 43%
+                  </span>
+                </div>
               </div>
             </div>
 
-            {/* Chart Card */}
+            {/* CHART CARD */}
             <div className="bg-[#141B22] border border-[#1E2731] rounded-xl p-4">
-              <div className="flex items-end gap-2 mb-5">
-                <span className="text-5xl font-semibold text-[#4C82FB]">63%</span>
+              <div className="flex items-end gap-2 mb-4">
+                <span className="text-5xl font-semibold text-[#4C82FB]">
+                  63%
+                </span>
                 <span className="text-lg text-[#4C82FB]/80 mb-1">chance</span>
-                <span className="ml-2 text-green-500 text-sm font-medium">↑ 7%</span>
+                <span className="ml-2 text-green-500 text-sm">↑ 7%</span>
               </div>
 
-              <ChartContainer config={chartConfig} className="h-[260px]">
+              <ChartContainer config={chartConfig} className="h-[280px] w-full">
                 <LineChart data={chartData}>
                   <CartesianGrid vertical={false} stroke="#1E2731" />
-                  <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: "#52606D", fontSize: 11 }} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fill: "#52606D", fontSize: 11 }} tickFormatter={(v) => `${v}%`} />
-                  <ChartTooltip content={<ChartTooltipContent className="bg-[#1A2128] border-[#2A3641]" />} />
-                  <Line type="monotone" dataKey="probability" stroke="#4C82FB" strokeWidth={2.5} dot={false} />
+
+                  <XAxis
+                    dataKey="time"
+                    type="number"
+                    scale="time"
+                    domain={["dataMin", "dataMax"]}
+                    tickFormatter={(value) =>
+                      new Date(value).toLocaleTimeString([], {
+                        hour: "numeric",
+                        minute: "2-digit",
+                      })
+                    }
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: "#52606D", fontSize: 11 }}
+                  />
+
+                  <YAxis
+                    axisLine={false}
+                    tickLine={false}
+                    tick={{ fill: "#52606D", fontSize: 11 }}
+                    tickFormatter={(v) => `${v}%`}
+                    domain={[0, 100]}
+                  />
+
+                  <ChartTooltip
+                    content={
+                      <ChartTooltipContent className="bg-[#1A2128] border-[#2A3641]" />
+                    }
+                  />
+
+                  <Line
+                    type="monotone"
+                    dataKey="probability"
+                    stroke="#4C82FB"
+                    strokeWidth={2.5}
+                    dot={false}
+                    isAnimationActive
+                    animationDuration={300}
+                  />
                 </LineChart>
               </ChartContainer>
 
-              {/* Chart Controls */}
-              <div className="flex items-center justify-between mt-3">
+              {/* TIME RANGE CONTROLS */}
+              <div className="flex justify-between items-center mt-3">
                 <div className="flex gap-1">
-                  {["1H","6H","1D","1W","1M","ALL"].map(r => (
+                  {["1H", "6H", "1D", "1W", "1M", "ALL"].map((range) => (
                     <button
-                      key={r}
-                      onClick={() => setTimeRange(r)}
+                      key={range}
+                      onClick={() => setTimeRange(range)}
                       className={`px-3 py-1.5 text-xs rounded-md ${
-                        timeRange === r ? "bg-[#1E2731] text-white" : "text-gray-500 hover:text-gray-300"
+                        timeRange === range
+                          ? "bg-[#1E2731] text-white"
+                          : "text-gray-500 hover:text-gray-300"
                       }`}
                     >
-                      {r}
+                      {range}
                     </button>
                   ))}
                 </div>
 
                 <div className="flex gap-1">
                   {[FileText, Code, Settings].map((Icon, i) => (
-                    <Button key={i} variant="ghost" size="icon" className="hover:bg-[#1A2128] text-gray-400">
+                    <Button
+                      key={i}
+                      variant="ghost"
+                      size="icon"
+                      className="hover:bg-[#1A2128]"
+                    >
                       <Icon className="w-4 h-4" />
                     </Button>
                   ))}
@@ -128,39 +225,35 @@ export default function DetailPage() {
               </div>
             </div>
 
-            {/* Order Book */}
-            <div className="bg-[#141B22] border border-[#1E2731] rounded-xl p-4">
-              <div className="flex justify-between items-center">
-                <div className="flex gap-2 items-center">
-                  <h3 className="font-medium">Order Book</h3>
-                  <Info className="w-4 h-4 text-gray-500" />
-                </div>
-                <ChevronDown className="w-5 h-5 text-gray-400" />
+            {/* ORDER BOOK */}
+            <div className="bg-[#141B22] border border-[#1E2731] rounded-xl p-4 flex justify-between">
+              <div className="flex gap-2 items-center">
+                <span className="font-medium">Order Book</span>
+                <Info className="w-4 h-4 text-gray-500" />
               </div>
+              <ChevronDown className="w-5 h-5 text-gray-400" />
             </div>
 
-            {/* Market Context */}
-            <div className="bg-[#141B22] border border-[#1E2731] rounded-xl p-4">
-              <div className="flex justify-between">
-                <h3 className="font-medium">Market Context</h3>
-                <button className="text-[#4C82FB] text-sm">Generate</button>
-              </div>
+            {/* MARKET CONTEXT */}
+            <div className="bg-[#141B22] border border-[#1E2731] rounded-xl p-4 flex justify-between">
+              <span className="font-medium">Market Context</span>
+              <button className="text-[#4C82FB] text-sm">Generate</button>
             </div>
 
-            {/* Rules */}
+            {/* RULES */}
             <div className="bg-[#141B22] border border-[#1E2731] rounded-xl p-4">
-              <h3 className="font-medium mb-2">Rules</h3>
+              <span className="font-medium block mb-1">Rules</span>
               <p className="text-sm text-gray-400">
-                This market will resolve to "Yes" if any Federal or State jurisdiction formally charges…
+                This market resolves to "Yes" if any Federal or State
+                jurisdiction formally charges…
               </p>
             </div>
           </div>
 
-          {/* Right Column */}
+          {/* RIGHT COLUMN */}
           <div className="lg:sticky lg:top-6 h-fit">
             <TradePanel />
           </div>
-
         </div>
       </main>
     </div>

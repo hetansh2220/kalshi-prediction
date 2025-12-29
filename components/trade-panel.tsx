@@ -66,7 +66,7 @@ export function TradePanel() {
         </div>
 
         <Button className="w-full bg-[#4C82FB] hover:bg-[#5A8DFC] h-10">
-          Trade
+          Buy Yes
         </Button>
       </div>
 
