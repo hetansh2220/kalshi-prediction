@@ -16,7 +16,7 @@ export function TradePanel() {
   }
 
   return (
-    <div className="bg-[#2a2c33] border-2 border-[#1E2731] rounded-2xl p-5 w-full max-w-lg">
+    <div className=" border-2 border-[#1E2731] rounded-2xl p-5 w-full max-w-lg">
       
       {/* TABS */}
       <div className="flex items-center mb-5 border-b border-[#1E2731] text-base">
@@ -48,7 +48,7 @@ export function TradePanel() {
         <button
           onClick={() => setSelection("yes")}
           className={`
-            h-14
+            h-10
             rounded-xl
             font-semibold
             text-base
@@ -68,7 +68,7 @@ export function TradePanel() {
         <button
           onClick={() => setSelection("no")}
           className={`
-            h-14
+            h-10
             rounded-xl
             font-semibold
             text-base
@@ -140,7 +140,7 @@ export function TradePanel() {
       </div>
 
       {/* CTA */}
-      <Button className="w-full mt-7 py-6 text-lg bg-primary hover:bg-[#3574E6]">
+      <Button className="w-full mt-7 py-5 text-md font-bold bg-primary hover:bg-[#3574E6]">
         {mode === "buy"
           ? `Buy ${selection === "yes" ? "Yes" : "No"}`
           : `Sell ${selection === "yes" ? "Yes" : "No"}`}

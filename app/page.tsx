@@ -159,7 +159,7 @@ export function Page() {
               <button
                 key={tab}
                 onClick={() => setActiveFilter(tab)}
-                className={`whitespace-nowrap px-3 py-1 rounded-md text-md transition-colors ${activeFilter === tab
+                className={`whitespace-nowrap px-3 py-1 rounded-md text-sm transition-colors ${activeFilter === tab
                     ? "bg-primary text-white font-semibold"
                     : "text-slate-400 hover:text-slate-200"
                   }`}

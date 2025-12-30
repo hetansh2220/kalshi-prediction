@@ -109,7 +109,7 @@ export default function MarketDetailPage({ params }: PageProps) {
             </div>
 
             {/* CHART */}
-            <div className="bg-[#2a2c33] border-2 border-[#1E2731] rounded-xl p-3.5">
+            <div className=" border-2 border-[#1E2731] rounded-xl p-3.5">
               <div className="flex items-end gap-2 mb-3">
                 <span className="text-4xl font-semibold text-primary">63%</span>
                 <span className="text-base text-accent- mb-1">chance</span>

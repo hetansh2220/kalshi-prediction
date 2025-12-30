@@ -47,9 +47,9 @@ export function Navbar() {
           {/* Right Navigation */}
           <div className="flex items-center gap-4">
             <button>
-              <span>How it works</span>
+              <span className="text-sm">How it works</span>
             </button>
-            <Button className="bg-transparent hover:bg-primary">
+            <Button className="bg-transparent hover:bg-primary text-sm">
               Log In
             </Button>
             <Button >Sign Up</Button>
@@ -66,7 +66,7 @@ export function Navbar() {
           {categories.map((category) => (
             <button
               key={category}
-              className={`whitespace-nowrap text-md transition-colors ${
+              className={`whitespace-nowrap text-sm transition-colors ${
                 category === "Trending"
                   ? "text-white font-semibold flex items-center gap-1"
                   : "text-slate-400 hover:text-slate-300"
