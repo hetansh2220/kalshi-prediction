@@ -49,7 +49,7 @@ export function TradePanel() {
           onClick={() => setSelection("yes")}
           className={`
             h-10
-            rounded-xl
+            rounded-md
             font-semibold
             text-base
             transition-all
@@ -69,12 +69,12 @@ export function TradePanel() {
           onClick={() => setSelection("no")}
           className={`
             h-10
-            rounded-xl
+            rounded-md
             font-semibold
             text-base
             transition-all
             duration-200
-            flex items-center justify-center
+            flex items-center justify-center 
             ${
               selection === "no"
                 ? "bg-[#E04444] text-white shadow-[0_0_18px_#e0444435]"
@@ -140,7 +140,7 @@ export function TradePanel() {
       </div>
 
       {/* CTA */}
-      <Button className="w-full mt-7 py-5 text-md font-bold bg-primary hover:bg-[#3574E6]">
+      <Button className="w-full mt-7 py-5 text-md rounded-md font-bold bg-primary hover:bg-[#3574E6]">
         {mode === "buy"
           ? `Buy ${selection === "yes" ? "Yes" : "No"}`
           : `Sell ${selection === "yes" ? "Yes" : "No"}`}

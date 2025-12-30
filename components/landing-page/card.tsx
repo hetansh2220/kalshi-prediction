@@ -92,7 +92,7 @@ export function MarketCard({ id, title, image, mainProbability, volume }: Market
         <button
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); console.log("YES clicked"); }}
           className="
-            flex-1 py-3  font-semibold text-sm
+            flex-1 py-3 rounded-md  font-semibold text-sm
             bg-emerald-500/20 hover:bg-emerald-500/30
             text-emerald-400 
             transition cursor-pointer
@@ -104,7 +104,7 @@ export function MarketCard({ id, title, image, mainProbability, volume }: Market
         <button
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); console.log("NO clicked"); }}
           className="
-            flex-1 py-3 font-semibold text-sm
+            flex-1 py-3 font-semibold text-sm rounded-md
             bg-red-500/20 hover:bg-red-500/30
             text-red-400 
             transition cursor-pointer
