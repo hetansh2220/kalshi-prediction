@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { Search, ChevronRight, Settings, Bookmark } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { MarketCard } from "@/components/landing-page/card"
 
 interface Market {
@@ -39,50 +38,35 @@ const MOCK_MARKETS: Market[] = [
     id: "1",
     title: "Will anyone be charged over Daycare fraud in...",
     mainProbability: 64,
-    options: [
-      { label: "Yes", probability: 64, outcome: "Yes" },
-      { label: "No", probability: 36, outcome: "No" },
-    ],
+    options: [],
     volume: "$91k Vol.",
   },
   {
     id: "2",
     title: "What will Trump say during Zelenskyy event on Sunday?",
     mainProbability: 64,
-    options: [
-      { label: "Thousand / Million /...", probability: 64, outcome: "Yes" },
-      { label: "Russia / Ukraine 10+...", probability: 72, outcome: "No" },
-    ],
+    options: [],
     volume: "$130k Vol.",
   },
   {
     id: "3",
     title: "Super Bowl Champion 2026",
     mainProbability: 17,
-    options: [
-      { label: "Los Angeles R", probability: 17, outcome: "Yes" },
-      { label: "Seattle", probability: 12, outcome: "No" },
-    ],
+    options: [],
     volume: "$636m Vol.",
   },
   {
     id: "4",
     title: "Russia x Ukraine ceasefire by January 31...",
     mainProbability: 11,
-    options: [
-      { label: "Yes", probability: 11, outcome: "Yes" },
-      { label: "No", probability: 89, outcome: "No" },
-    ],
+    options: [],
     volume: "$3m Vol.",
   },
   {
     id: "5",
     title: "Palace vs Spurs",
     mainProbability: 43,
-    options: [
-      { label: "Palace", probability: 43, outcome: "Yes" },
-      { label: "Spurs", probability: 27, outcome: "No" },
-    ],
+    options: [],
     volume: "$684k Vol.",
     timeframe: "1H - 40'",
   },
@@ -90,10 +74,7 @@ const MOCK_MARKETS: Market[] = [
     id: "6",
     title: "Bologna FC 1909 vs US Sassuolo Calcio",
     mainProbability: 47,
-    options: [
-      { label: "Bologna FC", probability: 47, outcome: "Yes" },
-      { label: "US Sassuolo", probability: 24, outcome: "No" },
-    ],
+    options: [],
     volume: "$475k Vol.",
     timeframe: "1H - 11",
   },
@@ -101,10 +82,7 @@ const MOCK_MARKETS: Market[] = [
     id: "7",
     title: "Jaguars vs Colts",
     mainProbability: 66,
-    options: [
-      { label: "Jaguars", probability: 66, outcome: "Yes" },
-      { label: "Colts", probability: 35, outcome: "No" },
-    ],
+    options: [],
     volume: "$1m Vol.",
     timeframe: "NFL 11:30 PM",
   },
@@ -112,10 +90,7 @@ const MOCK_MARKETS: Market[] = [
     id: "8",
     title: "Steelers vs Browns",
     mainProbability: 67,
-    options: [
-      { label: "Steelers", probability: 67, outcome: "Yes" },
-      { label: "Browns", probability: 34, outcome: "No" },
-    ],
+    options: [],
     volume: "$838k Vol.",
     timeframe: "NFL 11:30 PM",
   },
@@ -127,58 +102,74 @@ export function Page() {
 
   return (
     <div className="min-h-screen bg-[#1a1b1e] text-white">
-      {/* Search and Filter Bar */}
-      <div className=" border-b border-slate-700 bg-[#1a1b1e] backdrop-blur-sm p-4">
-        <div className="flex items-center gap-4 overflow-x-auto pb-1">
 
-          {/* Search */}
-          <div className="relative flex-1 max-w-md min-w-55">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
-            <Input
-              type="text"
-              placeholder="Search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-slate-800 border-slate-700 text-white placeholder-slate-400 placeholder::text-md"
-            />
-          </div>
+      {/* HEADER BAR */}
+      <div className="border-b border-slate-700 bg-[#1a1b1e] backdrop-blur-sm p-3 sm:p-4 sticky top-0 z-50">
+        <div className="flex flex-col gap-3">
 
-          {/* Buttons */}
-          <div className="flex items-center gap-6 shrink-0">
-          
-              <Settings className="w-5 h-5  text-slate-500" />
-       
-            
-              <Bookmark className="w-5 h-5  text-slate-500" />
-         
-          </div>
+          {/* Search + Icons */}
+       {/* Search + Filters Bar */}
+<div className=" border-slate-700">
+  <div className="flex items-center gap-4 overflow-x-auto no-scrollbar">
 
-          {/* Filter Tabs */}
-          <div className="flex items-center gap-2 shrink-0 ">
-            {FILTER_TABS.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveFilter(tab)}
-                className={`whitespace-nowrap px-3 py-1 rounded-md text-sm transition-colors ${activeFilter === tab
-                    ? "bg-primary text-white font-semibold"
-                    : "text-slate-400 hover:text-slate-200"
-                  }`}
-              >
-                {tab}
-              </button>
-            ))}
-            <button className="text-slate-400 hover:text-slate-200">
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+    {/* Search */}
+    <div className="relative w-[340px] shrink-0">
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+      <Input
+        type="text"
+        placeholder="Search"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="pl-10 bg-[#1e293b] border-transparent text-white placeholder-slate-400 rounded-xl"
+      />
+    </div>
+
+    {/* Icons */}
+    <div className="flex items-center gap-4 shrink-0">
+      <Settings className="w-5 h-5 text-slate-300" />
+      <Bookmark className="w-5 h-5 text-slate-300" />
+    </div>
+
+    {/* Divider */}
+    <div className="w-px h-6 bg-slate-700 shrink-0" />
+
+    {/* Tabs Row */}
+    <div className="flex items-center gap-4 shrink-0">
+      {FILTER_TABS.map((tab) => (
+        <button
+          key={tab}
+          onClick={() => setActiveFilter(tab)}
+          className={`whitespace-nowrap text-sm transition-all ${
+            activeFilter === tab
+              ? "bg-primary text-white px-3 py-1 rounded-lg"
+              : "text-slate-300 hover:text-white"
+          }`}
+        >
+          {tab}
+        </button>
+      ))}
+
+      {/* Chevron */}
+      <ChevronRight className="w-5 h-5 text-slate-300" />
+    </div>
+
+  </div>
+</div>
+
 
         </div>
       </div>
 
-
-      {/* Markets Grid */}
-      <div className="p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* MARKETS GRID */}
+      <div className="p-3 sm:p-4">
+        <div className="
+          grid 
+          grid-cols-1
+          md:grid-cols-2 
+          lg:grid-cols-3 
+          xl:grid-cols-4
+          gap-3 sm:gap-4
+        ">
           {MOCK_MARKETS.map((market) => (
             <MarketCard
               key={market.id}
@@ -191,7 +182,9 @@ export function Page() {
           ))}
         </div>
       </div>
+
     </div>
   )
 }
+
 export default Page

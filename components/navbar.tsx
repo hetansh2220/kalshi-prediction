@@ -42,7 +42,7 @@ export function Navbar() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <Input
                   placeholder="Search polymarket"
-                  className="w-124 h-10 pl-10 bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+                  className="w-124 md:w-112 h-10 pl-10 bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
                 />
               </div>
             </div>
@@ -50,8 +50,8 @@ export function Navbar() {
 
           {/* Right Navigation */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <button className="hidden md:block">
-              <span className="text-sm">How it works</span>
+            <button className="hidden lg:block">
+              <span className="md:text-sm">How it works</span>
             </button>
 
             {/* Visible on mobile now */}
