@@ -1,37 +1,42 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Bookmark, Gift } from "lucide-react"
-import Link from "next/link"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Slider } from "@/components/ui/slider"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Slider } from "@/components/ui/slider";
+import Link from "next/link";
+import { useState } from "react";
 
 interface MarketCardProps {
-  id: string
-  title: string
-  image?: string
-  mainProbability: number
-  volume: string
+  id: string;
+  title: string;
+  image?: string;
+  mainProbability: number;
+  volume: string;
 }
 
-export function MarketCard({ id, title, image, mainProbability, volume }: MarketCardProps) {
-  const radius = 34
-  const circumference = 2 * Math.PI * radius
-  const offset = circumference - (mainProbability / 100) * circumference
+export function MarketCard({
+  id,
+  title,
+  image,
+  mainProbability,
+  volume,
+}: MarketCardProps) {
+  const radius = 34;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (mainProbability / 100) * circumference;
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [activeSelection, setActiveSelection] = useState<"yes" | "no">("yes")
-  const [betAmount, setBetAmount] = useState(10)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeSelection, setActiveSelection] = useState<"yes" | "no">("yes");
+  const [betAmount, setBetAmount] = useState(10);
 
-  const winnings = Math.round(betAmount * (100 / Math.max(mainProbability, 1)))
+  const winnings = Math.round(betAmount * (100 / Math.max(mainProbability, 1)));
 
   const openModal = (e: React.MouseEvent, selection: "yes" | "no") => {
-    e.preventDefault()
-    e.stopPropagation()
-    setActiveSelection(selection)
-    setIsModalOpen(true)
-  }
+    e.preventDefault();
+    e.stopPropagation();
+    setActiveSelection(selection);
+    setIsModalOpen(true);
+  };
 
   return (
     <>
@@ -42,7 +47,7 @@ export function MarketCard({ id, title, image, mainProbability, volume }: Market
           rounded 
           overflow-hidden 
           cursor-pointer
-          bg-[#2a2c33] 
+          bg-transparent
           border border-slate-800
           hover:shadow-xl hover:shadow-black/10
           transition-all duration-300
@@ -50,13 +55,16 @@ export function MarketCard({ id, title, image, mainProbability, volume }: Market
       >
         <Link href={`/market/${id}`}>
           {/* HEADER */}
-          <div className="p-3 sm:p-4 border-b border-slate-800">
+          <div className="p-3 sm:p-4">
             <div className="flex gap-3 sm:gap-4">
-
               {/* Image */}
               <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-slate-700 shrink-0">
                 {image ? (
-                  <img src={image} alt={title} className="w-full h-full object-cover" />
+                  <img
+                    src={image}
+                    alt={title}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-slate-500 text-xs sm:text-sm">
                     No Img
@@ -79,13 +87,26 @@ export function MarketCard({ id, title, image, mainProbability, volume }: Market
                 <div className="relative w-14 h-14 sm:w-16 sm:h-16">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
                     <defs>
-                      <linearGradient id="probGradient" x1="0" y1="0" x2="1" y2="1">
+                      <linearGradient
+                        id="probGradient"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                      >
                         <stop offset="0%" stopColor="#34d399" />
                         <stop offset="100%" stopColor="#10b981" />
                       </linearGradient>
                     </defs>
 
-                    <circle cx="40" cy="40" r={radius} strokeWidth="6" className="stroke-slate-700" fill="none" />
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r={radius}
+                      strokeWidth="6"
+                      className="stroke-slate-700"
+                      fill="none"
+                    />
 
                     <circle
                       cx="40"
@@ -139,27 +160,6 @@ export function MarketCard({ id, title, image, mainProbability, volume }: Market
           </div>
 
           {/* FOOTER */}
-          <div className="px-3 sm:px-4 py-2 sm:py-3 border-t border-slate-800 bg-[#262830] flex items-center justify-between">
-            <span className="text-[10px] sm:text-xs text-slate-500 truncate max-w-[120px] sm:max-w-none">
-              {id}
-            </span>
-
-            <div className="flex gap-1">
-              <button
-                onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-                className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg transition text-slate-400 hover:text-white"
-              >
-                <Gift className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-                className="p-1.5 sm:p-2 hover:bg-slate-800 rounded-lg transition text-slate-400 hover:text-white"
-              >
-                <Bookmark className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
         </Link>
       </div>
 
@@ -176,14 +176,16 @@ export function MarketCard({ id, title, image, mainProbability, volume }: Market
             p-5 sm:p-6
           "
         >
-
           <div className="space-y-6 pt-2">
-
             {/* Header */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 flex-1">
                 {image ? (
-                  <img src={image} alt={title} className="w-10 h-10 sm:w-12 sm:h-12 rounded-md object-cover bg-[#444654]" />
+                  <img
+                    src={image}
+                    alt={title}
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-md object-cover bg-[#444654]"
+                  />
                 ) : (
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-md bg-[#444654]" />
                 )}
@@ -212,7 +214,9 @@ export function MarketCard({ id, title, image, mainProbability, volume }: Market
 
                 <div className="text-right">
                   <p className="text-3xl sm:text-4xl font-bold text-gray-400">
-                    <span className="text-2xl sm:text-3xl text-gray-400">$</span>
+                    <span className="text-2xl sm:text-3xl text-gray-400">
+                      $
+                    </span>
                     {betAmount}
                   </p>
                 </div>
@@ -220,16 +224,28 @@ export function MarketCard({ id, title, image, mainProbability, volume }: Market
 
               {/* Quick buttons */}
               <div className="grid grid-cols-2 sm:flex sm:gap-2 gap-2">
-                <button onClick={() => setBetAmount(1)} className="px-3 py-2 bg-[#393C44] hover:bg-[#4A4E57] rounded-md text-xs sm:text-sm text-gray-400 hover:text-white transition">
+                <button
+                  onClick={() => setBetAmount(1)}
+                  className="px-3 py-2 bg-[#393C44] hover:bg-[#4A4E57] rounded-md text-xs sm:text-sm text-gray-400 hover:text-white transition"
+                >
                   +$1
                 </button>
-                <button onClick={() => setBetAmount(betAmount + 20)} className="px-3 py-2 bg-[#393C44] hover:bg-[#4A4E57] rounded-md text-xs sm:text-sm text-gray-400 hover:text-white transition">
+                <button
+                  onClick={() => setBetAmount(betAmount + 20)}
+                  className="px-3 py-2 bg-[#393C44] hover:bg-[#4A4E57] rounded-md text-xs sm:text-sm text-gray-400 hover:text-white transition"
+                >
                   +$20
                 </button>
-                <button onClick={() => setBetAmount(betAmount + 100)} className="px-3 py-2 bg-[#393C44] hover:bg-[#4A4E57] rounded-md text-xs sm:text-sm text-gray-400 hover:text-white transition">
+                <button
+                  onClick={() => setBetAmount(betAmount + 100)}
+                  className="px-3 py-2 bg-[#393C44] hover:bg-[#4A4E57] rounded-md text-xs sm:text-sm text-gray-400 hover:text-white transition"
+                >
                   +$100
                 </button>
-                <button onClick={() => setBetAmount(1000)} className="px-3 py-2 bg-[#393C44] hover:bg-[#4A4E57] rounded-md text-xs sm:text-sm text-gray-400 hover:text-white transition">
+                <button
+                  onClick={() => setBetAmount(1000)}
+                  className="px-3 py-2 bg-[#393C44] hover:bg-[#4A4E57] rounded-md text-xs sm:text-sm text-gray-400 hover:text-white transition"
+                >
                   Max
                 </button>
               </div>
@@ -271,10 +287,9 @@ export function MarketCard({ id, title, image, mainProbability, volume }: Market
                 </span>
               </div>
             </Button>
-
           </div>
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }

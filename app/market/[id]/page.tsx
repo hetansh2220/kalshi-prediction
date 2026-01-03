@@ -1,17 +1,14 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Navbar } from "@/components/navbar";
 import { TradePanel } from "@/components/trade-panel";
-import { Button } from "@/components/ui/button";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import {
+  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  ChartConfig,
 } from "@/components/ui/chart";
-import { FileText, Code, Settings } from "lucide-react";
+import { useMemo, useState } from "react";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 
 type PageProps = {
   params: {
@@ -71,7 +68,6 @@ export default function MarketDetailPage({ params }: PageProps) {
     <div className="min-h-screen bg-[#1a1b1e] text-white">
       <main className="px-5 py-6 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-5 w-full">
-
           {/* LEFT */}
           <div className="space-y-4">
             {/* HEADER */}
@@ -91,15 +87,28 @@ export default function MarketDetailPage({ params }: PageProps) {
                   <span>$205,005 Vol.</span>
                   <span className="flex items-center gap-1">
                     <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                      <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.2" />
-                      <path d="M7 3.5V7L9.5 9.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                      <circle
+                        cx="7"
+                        cy="7"
+                        r="6"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                      />
+                      <path
+                        d="M7 3.5V7L9.5 9.5"
+                        stroke="currentColor"
+                        strokeWidth="1.2"
+                        strokeLinecap="round"
+                      />
                     </svg>
                     Jan 31, 2026
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2 mt-1.5">
-                  <span className="text-[18px] font-semibold text-primary">44%</span>
+                  <span className="text-[18px] font-semibold text-primary">
+                    44%
+                  </span>
                   <span className="text-[13px] text-accent">chance</span>
                   <span className="flex items-center gap-1 text-[12px] text-red-400">
                     ▼ 43%
@@ -167,16 +176,16 @@ export default function MarketDetailPage({ params }: PageProps) {
                     <button
                       key={range}
                       onClick={() => setTimeRange(range)}
-                      className={`px-3 py-1.5 text-xs md:text-md rounded-md ${timeRange === range
-                        ? "bg-primary text-white"
-                        : "text-gray-500 hover:text-gray-300"
-                        }`}
+                      className={`px-3 py-1.5 text-xs md:text-md rounded-md ${
+                        timeRange === range
+                          ? "bg-primary text-white"
+                          : "text-gray-500 hover:text-gray-300"
+                      }`}
                     >
                       {range}
                     </button>
                   ))}
                 </div>
-
               </div>
             </div>
           </div>
