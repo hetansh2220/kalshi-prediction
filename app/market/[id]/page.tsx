@@ -7,14 +7,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { trpc } from "@/lib/trpc";
+import { useParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-
-type PageProps = {
-  params: {
-    id: string;
-  };
-};
 
 const rawChartData = [
   { time: new Date("2024-12-29T08:00:00").getTime(), probability: 85 },
@@ -55,8 +51,17 @@ function filterByRange(data: typeof rawChartData, range: string) {
   return data.filter((d) => d.time >= cutoff);
 }
 
-export default function MarketDetailPage({ params }: PageProps) {
-  const { id } = params;
+export default function MarketDetailPage() {
+  const { id } = useParams<{ id: string }>();
+
+  const { data } = trpc.events.getEvent.useQuery(
+    {
+      id: id,
+    },
+    {
+      enabled: !!id,
+    }
+  );
 
   const [timeRange, setTimeRange] = useState("ALL");
   const chartData = useMemo(
@@ -73,18 +78,18 @@ export default function MarketDetailPage({ params }: PageProps) {
             {/* HEADER */}
             <div className="flex items-start gap-3">
               <img
-                src="/poly.webp"
+                src={data?.imageUrl}
                 alt="Market"
                 className="w-14 h-14 rounded-lg object-cover bg-[#1E2731]"
               />
 
               <div className="flex-1 min-w-0">
                 <h1 className="text-[22px] leading-snug font-semibold mb-1">
-                  Market ID: {id}
+                  {data?.title}
                 </h1>
 
                 <div className="flex items-center gap-3 text-[15px] text-[#9AA4AF]">
-                  <span>$205,005 Vol.</span>
+                  <span>${data?.volume} Vol.</span>
                   <span className="flex items-center gap-1">
                     <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
                       <circle
@@ -102,16 +107,6 @@ export default function MarketDetailPage({ params }: PageProps) {
                       />
                     </svg>
                     Jan 31, 2026
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2 mt-1.5">
-                  <span className="text-[18px] font-semibold text-primary">
-                    44%
-                  </span>
-                  <span className="text-[13px] text-accent">chance</span>
-                  <span className="flex items-center gap-1 text-[12px] text-red-400">
-                    ▼ 43%
                   </span>
                 </div>
               </div>
@@ -190,7 +185,6 @@ export default function MarketDetailPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* RIGHT PANEL */}
           <div className="lg:sticky lg:top-6 h-fit flex justify-center lg:block">
             <TradePanel />
           </div>
